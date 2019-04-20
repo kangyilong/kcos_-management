@@ -15,7 +15,7 @@ export default class Addedit extends PureComponent {
             const parameter = JSON.stringify([
                 `kcos_menu1314${new Date().getTime()}${Math.floor(Math.random() * 1000)}`,
                 values.level,
-                values.parent_id,
+                values.parent_id !== '#' ? values.parent_id : 'TOP',
                 values.name,
                 values.path,
                 values.type,

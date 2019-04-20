@@ -13,7 +13,7 @@ class BasicLayout extends React.Component<Props> {
 
   componentWillMount() {
     const { location } = this.props;
-    if(location.pathname === '/' || location.pathname === '' || location.pathname === '/home') {
+    if(location.pathname !== '/' || location.pathname !== '' || location.pathname !== '/home') {
       const user_id = sessionStorage.getItem('user_id');
       if(user_id !== CONFIG.USERID) {
         router.push('/login');
@@ -21,6 +21,9 @@ class BasicLayout extends React.Component<Props> {
         const defPath = sessionStorage.getItem('defPath');
         router.push(defPath);
       }
+    }else {
+      const defPath = sessionStorage.getItem('defPath');
+      router.push(defPath);
     }
   }
 

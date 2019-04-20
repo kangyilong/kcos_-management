@@ -55,16 +55,34 @@ class ListPage extends PureComponent<Props, any>{
   };
 
   screeningList = (sv) => {
+    const {statements, columns} = this.props;
     const keys = Object.keys(sv);
     const values = Object.values(sv);
-    let searchStatements = this.props.statements;
+    let includeObj = [];
+    columns.forEach(item => {
+      if(item.include) {
+        includeObj.push({
+          [item.dataIndex]: item.dataIndex,
+          include: item.include
+        })
+      }
+    });
+    let searchStatements = statements;
     if(keys.length > 0 && values.length > 0) {
       if(this.props.statements.includes('pp')) {
         keys.forEach((item, index) => {
           if(item.includes('Name')) {
             item = item.substr(0, item.length - 4);
           }
-          searchStatements += ` AND p.${item} like '%${values[index]}%'`
+          let search = '';
+          includeObj.length > 0 ? includeObj.forEach(includeItem => {
+            if(includeItem[item]) {
+              search = ` AND ${includeItem.include}.${item} like '%${values[index]}%'`;
+            }else {
+              search = ` AND p.${item} like '%${values[index]}%'`;
+            }
+          }) : search = ` AND p.${item} like '%${values[index]}%'`;
+          searchStatements += search;
         });
       }else {
         keys.forEach((item, index) => {

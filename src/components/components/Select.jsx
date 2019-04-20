@@ -22,7 +22,7 @@ export default function SelectComponent(props) {
                 required: !!props.options.required,
                 message: '必填选项'
             }],
-    })(<Select showSearch allowClear={true} style={{ 'minWidth': '160px' }} filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
+    })(<Select showSearch allowClear={true} style={{ 'minWidth': '160px' }} placeholder='请选择' filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}>
         {Array.isArray(selectData) && selectData.map((item, index) => (<Option value={item[props.options.keyName]} key={index}>
               {props.options.valueName.indexOf('-') !== -1 ?
         props.options.valueName.split('-').length === 2 ?

@@ -20,7 +20,7 @@ let PageButtons = class PageButtons extends PureComponent {
             });
         };
         this.buttonClick = (path) => {
-            const { match, radioRowKeys } = this.props;
+            const { match, radioRowKeys, dispatch } = this.props;
             const PARENT_PATH = match.path;
             switch (path) {
                 case '/add':
@@ -50,8 +50,16 @@ let PageButtons = class PageButtons extends PureComponent {
                     });
                     break;
                 case '/detail':
+                    if (!radioRowKeys) {
+                        message.warning('请选中后操作', 1.5);
+                        return;
+                    }
+                    router.push(`${PARENT_PATH}/detail?id=${radioRowKeys[0]}`);
                     break;
             }
+            dispatch({
+                type: 'global_page/rmRowKeys'
+            });
         };
     }
     componentDidMount() {

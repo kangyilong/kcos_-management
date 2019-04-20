@@ -29,7 +29,8 @@ export default class ListPageHeader extends PureComponent<Props, any> {
   };
 
   dealComponent = (getFieldDecorator, filedData: Array<any>) => {
-    return filedData.map((item, index) => (
+    const searchData = filedData.filter(item => item.search);
+    return searchData.map((item, index) => (
       <Form.Item
         label={item.title}
         key={index}

@@ -13,6 +13,12 @@ export default {
         type: 'setMenu',
         payload
       });
+    },
+    *selectedHeaderMenu({ payload }, { call, put }) {
+      yield put({
+        type: 'setHeaderMenu',
+        payload
+      });
     }
   },
 
@@ -28,6 +34,12 @@ export default {
         ...state,
         menuId: action.payload.id,
         menuName: action.payload.name,
+      }
+    },
+    setHeaderMenu(state, action) {
+      return {
+        ...state,
+        headerMenuId: action.payload
       }
     }
   }

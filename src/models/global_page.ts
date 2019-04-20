@@ -7,6 +7,11 @@ export default {
         type: 'setRowKeys',
         payload
       });
+    },
+    *rmRowKeys(_, { call, put }) {
+      yield put({
+        type: 'removeRowKeys'
+      });
     }
   },
 
@@ -15,6 +20,12 @@ export default {
       return {
         ...state,
         radioRowKeys: action.payload
+      }
+    },
+    removeRowKeys(state) {
+      return {
+        ...state,
+        radioRowKeys: null
       }
     }
   }

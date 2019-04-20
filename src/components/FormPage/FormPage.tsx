@@ -3,6 +3,8 @@ import {
   Form, Input, Button, notification
 } from 'antd';
 import SelectComponent from '@/components/components/Select';
+import KcosImage from '@/components/components/Image';
+import KcosTextArea from '@/components/components/TextArea';
 import wantOperationApi from '@/methods/api/wantOperationApi';
 
 interface Props {
@@ -13,7 +15,8 @@ interface Props {
   statements?: string,
   details?: {
     ID: string,
-    tableName: string
+    tableName: string,
+    nameID?: string
   }
 }
 
@@ -21,7 +24,8 @@ class FormPage extends PureComponent<Props, any>{
 
   state = {
     confirmDirty: false,
-    autoCompleteResult: []
+    autoCompleteResult: [],
+    pic_url: {}
   };
 
   typeComponent = (getFieldDecorator, options) => {
@@ -37,6 +41,10 @@ class FormPage extends PureComponent<Props, any>{
               );
       case 'select':
         return <SelectComponent getFieldDecorator={getFieldDecorator} options={options} />;
+      case 'img':
+        return <KcosImage getFieldDecorator={getFieldDecorator} pic_url={ this.state.pic_url }  options={ options }/>;
+      case 'textarea':
+        return <KcosTextArea  getFieldDecorator={getFieldDecorator} options={options} />
     }
   };
 
@@ -79,15 +87,22 @@ class FormPage extends PureComponent<Props, any>{
   componentDidMount() {
     const { details, form, fileds } = this.props;
     if(details.ID) {
-      const statements = `SELECT * FROM ${details.tableName} WHERE id = '${details.ID}'`;
+      const statements = `SELECT * FROM ${details.tableName} WHERE ${details.nameID ? details.nameID : 'id'} = '${details.ID}'`;
       const keys = [];
       fileds.forEach(item => {
         keys.push(item.filed);
       });
       wantOperationApi({statements}).then(data => {
-        const ans = {};
+        const ans = {}, ex_pic = /_pic$/, pic_url = {};
         keys.forEach(item => {
+          if(ex_pic.exec(item)) {
+            pic_url[item] = data[0][item] ? data[0][item] : 'NO IMAGE';
+          }
           ans[item] = data[0][item];
+        });
+        console.log(pic_url);
+        this.setState({
+          pic_url
         });
         form.setFieldsValue(ans);
       });

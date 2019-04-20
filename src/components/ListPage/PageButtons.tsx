@@ -9,6 +9,7 @@ const confirm = Modal.confirm;
 interface Props {
   menuId: string,
   match: any,
+  dispatch?: Function,
   radioRowKeys?: Array<any>,
   buttonEvent?: Function
 }
@@ -32,7 +33,7 @@ export default class PageButtons extends PureComponent<Props, any>{
   };
 
   buttonClick = (path) => {
-    const { match, radioRowKeys } = this.props;
+    const { match, radioRowKeys, dispatch } = this.props;
     const PARENT_PATH = match.path;
     switch(path) {
       case '/add':
@@ -62,8 +63,16 @@ export default class PageButtons extends PureComponent<Props, any>{
         });
         break;
       case '/detail':
+        if(!radioRowKeys) {
+          message.warning('请选中后操作', 1.5);
+          return;
+        }
+        router.push(`${PARENT_PATH}/detail?id=${radioRowKeys[0]}`);
         break;
     }
+    dispatch({
+      type: 'global_page/rmRowKeys'
+    });
   };
 
   componentDidMount() {

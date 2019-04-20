@@ -36,6 +36,7 @@ export default function SelectComponent(props: Props) {
         showSearch
         allowClear={ true }
         style={{'minWidth': '160px'}}
+        placeholder='请选择'
         filterOption={(input, option: any) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
       >
         {
