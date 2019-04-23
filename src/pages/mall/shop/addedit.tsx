@@ -11,7 +11,34 @@ export default class ShopAddEdit extends PureComponent {
   };
 
   formAddSubmit = (values) => {
-    console.log(values);
+    const hasMsg = message.loading('');
+    const fileList = values.shop_pic.fileList.map(item => item.response ? item.thumbUrl : item.uid);
+    const shop_pic = formatImg(fileList);
+    const { product_id, shop_Num, shop_name, shop_pri, shop_txt } = values;
+    // 查询该产品下有几种商品
+    const p_statements = `SELECT COUNT(*) AS count FROM shopMsg WHERE product_id = '${product_id}'`;
+    wantOperationApi({statements: p_statements}).then(data => {
+      const count = data[0].count;
+      const statements = `INSERT INTO shopMsg (product_id, shop_id, shop_name, shop_pic, shop_pri, shop_Num, shop_txt) VALUES (?,?,?,?,?,?,?)`;
+      const parameter = JSON.stringify([
+        product_id,
+        `${product_id}.${count + 1}`,
+        shop_name,
+        shop_pic,
+        shop_pri,
+        shop_Num,
+        shop_txt
+      ]);
+      wantOperationApi({
+        statements,
+        parameter
+      }).then(() => {
+        hasMsg();
+        message.success('操作成功', 1.5, () => {
+          window.history.go(-1);
+        });
+      }, hasMsg);
+    }, hasMsg);
   };
 
   formEditSubmit = (values, id) => {

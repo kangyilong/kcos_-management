@@ -29,7 +29,7 @@ export default class MallShop extends PureComponent {
                 dataIndex: 'shop_Num'
             }];
         return (<>
-        <ListPage match={match} columns={columns} statements={`SELECT p.shop_id as id, p.product_id, p.shop_name, p.shop_pri, p.shop_Num, pp.product_name FROM shopMsg as p inner join productMsg as pp on p.product_id = pp.product_id`} tableName="shopMsg"/>
+        <ListPage match={match} columns={columns} statements={`SELECT p.shop_id as id, p.product_id, p.shop_name, p.shop_pri, p.shop_Num, pp.product_name FROM shopMsg as p inner join productMsg as pp on p.product_id = pp.product_id`} tableName="shopMsg" asId="shop_id"/>
       </>);
     }
 }

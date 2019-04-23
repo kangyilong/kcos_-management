@@ -70,6 +70,7 @@ function childrenMenu(parentList, childrenList) {
             childrenList.forEach(item2 => {
                 if (item1.id === item2.parent_id) {
                     item1.children.push(item2);
+                    item1.children.sort((a, b) => a.number - b.number);
                 }
             });
         });

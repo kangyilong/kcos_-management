@@ -17,13 +17,11 @@ export default function DetailsPage(props: Props) {
       const k = props.keys.map(item => {
         return {...item, value: data[0][item.filed]}
       });
-      console.log(k);
       setDetailsData(k);
     })
   }, []);
 
   const detailCol = (item) => {
-    console.log(item);
     return item.type && item.type === 'img' ? (<Col span={10}><img src={item.value} width="160px"/></Col>) : (<Col span={10}>{ item.value }</Col>)
   };
 

@@ -8,6 +8,9 @@ export default class SystemMenu extends PureComponent {
                 title: '父菜单编号',
                 search: true
             }, {
+                title: '菜单编号',
+                dataIndex: 'id'
+            }, {
                 title: '菜单名称',
                 dataIndex: 'name',
                 search: true

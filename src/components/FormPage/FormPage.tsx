@@ -100,7 +100,6 @@ class FormPage extends PureComponent<Props, any>{
           }
           ans[item] = data[0][item];
         });
-        console.log(pic_url);
         this.setState({
           pic_url
         });

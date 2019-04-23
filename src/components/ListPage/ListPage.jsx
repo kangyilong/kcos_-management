@@ -75,8 +75,8 @@ let ListPage = class ListPage extends PureComponent {
         };
         this.buttonEvent = (ID) => {
             const hasMsg = message.loading('');
-            const { tableName, statements } = this.props;
-            const delStatements = `delete from ${tableName} where id = '${ID}'`;
+            const { tableName, asId, statements } = this.props;
+            const delStatements = `delete from ${tableName} where ${asId ? asId : 'id'} = '${ID}'`;
             wantOperationApi({ statements: delStatements }).then(() => {
                 hasMsg();
                 message.success('操作成功', 1.5, () => {

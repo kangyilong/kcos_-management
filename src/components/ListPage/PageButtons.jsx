@@ -14,6 +14,7 @@ let PageButtons = class PageButtons extends PureComponent {
         this.getButtons = () => {
             const statements = `SELECT * FROM message_menu WHERE parent_id = '${this.props.menuId}' AND type = 'btn'`;
             wantOperationApi({ statements }).then(data => {
+                data = data.sort((a, b) => a.number - b.number);
                 this.setState({
                     buttons: data
                 });

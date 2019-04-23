@@ -16,7 +16,8 @@ interface Props {
   menuName?: string,
   statements?: string,
   dispatch?: Function,
-  tableName?: string
+  tableName?: string,
+  asId?: string,
 }
 
 @connect(({ global_menu }) => ({
@@ -98,8 +99,8 @@ class ListPage extends PureComponent<Props, any>{
 
   buttonEvent = (ID) => {
     const hasMsg = message.loading('');
-    const { tableName, statements } = this.props;
-    const delStatements = `delete from ${tableName} where id = '${ID}'`;
+    const { tableName, asId, statements } = this.props;
+    const delStatements = `delete from ${tableName} where ${asId ? asId : 'id'} = '${ID}'`;
     wantOperationApi({statements: delStatements}).then(() => {
       hasMsg();
       message.success('操作成功', 1.5, () => {
