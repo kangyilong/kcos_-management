@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { Table } from 'antd';
 import ListPage from '@/components/ListPage/ListPage';
 
 interface Props {
@@ -16,7 +15,8 @@ export default class MallShop extends PureComponent<Props, any> {
     }, {
       dataIndex: 'id',
       title: '商品编号',
-      search: true
+      search: true,
+      belong: 'shop_id'
     }, {
       dataIndex: 'product_name',
       title: '产品名称',

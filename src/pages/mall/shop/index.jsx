@@ -10,7 +10,8 @@ export default class MallShop extends PureComponent {
             }, {
                 dataIndex: 'id',
                 title: '商品编号',
-                search: true
+                search: true,
+                belong: 'shop_id'
             }, {
                 dataIndex: 'product_name',
                 title: '产品名称',

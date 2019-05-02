@@ -11,7 +11,8 @@ export default class MallProduct extends PureComponent<Props, any> {
     const columns = [{
       dataIndex: 'id',
       title: '产品编号',
-      search: true
+      search: true,
+      belong: 'product_id'
     }, {
       dataIndex: 'product_name',
       title: '产品名称',
@@ -26,6 +27,7 @@ export default class MallProduct extends PureComponent<Props, any> {
           statements={`SELECT product_id AS id, product_name FROM productMsg`}
           tableName="productMsg"
           asId="product_id"
+          addWhere='WHERE'
         />
       </>
     )

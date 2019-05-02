@@ -21,6 +21,24 @@ class FormPage extends PureComponent {
                                 required: !!options.required, message: '必填选项',
                             }],
                     })(<Input />);
+                case 'password':
+                    return getFieldDecorator(options.filed, {
+                        rules: [{
+                                required: !!options.required, message: '必填选项',
+                            }],
+                    })(<Input type="password"/>);
+                case 'readonly':
+                    return getFieldDecorator(options.filed, {
+                        rules: [{
+                                required: !!options.required, message: '必填选项',
+                            }],
+                    })(<Input disabled={true}/>);
+                case 'hidden':
+                    return getFieldDecorator(options.filed, {
+                        rules: [{
+                                required: !!options.required, message: '必填选项',
+                            }],
+                    })(<Input disabled={true} style={{ 'display': 'none' }}/>);
                 case 'select':
                     return <SelectComponent getFieldDecorator={getFieldDecorator} options={options}/>;
                 case 'img':
@@ -30,7 +48,7 @@ class FormPage extends PureComponent {
             }
         };
         this.dealComponent = (getFieldDecorator, filedData) => {
-            return filedData.map((item, index) => (<Form.Item label={item.title} key={index}>
+            return filedData.map((item, index) => (<Form.Item label={item.type === 'hidden' ? '' : item.title} key={index}>
         {this.typeComponent(getFieldDecorator, item)}
       </Form.Item>));
         };
@@ -67,7 +85,7 @@ class FormPage extends PureComponent {
                 keys.push(item.filed);
             });
             wantOperationApi({ statements }).then(data => {
-                const ans = {}, ex_pic = /_pic$/, pic_url = {};
+                const ans = {}, ex_pic = /pic$/, pic_url = {};
                 keys.forEach(item => {
                     if (ex_pic.exec(item)) {
                         pic_url[item] = data[0][item] ? data[0][item] : 'NO IMAGE';
